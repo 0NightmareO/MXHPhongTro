@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthserviceService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -12,14 +13,15 @@ export class EditUserComponent implements OnInit{
   name='';
   click_page=false;
 
-  constructor(private _route: ActivatedRoute) {}
+  constructor(private _route: ActivatedRoute, private _auth: AuthserviceService) {}
 
   ngOnInit(): void {
-    var namefull='';
-    this._route.queryParams.subscribe(params => {
-      namefull = params['name'];
-    });
-    this.name = namefull;
+    // var namefull='';
+    // this._route.queryParams.subscribe(params => {
+    //   namefull = params['name'];
+    // });
+    // this.name = namefull;
+    this.name=this._auth.getName();
   }
   
   toggleMenu() {

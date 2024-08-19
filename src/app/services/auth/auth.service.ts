@@ -53,8 +53,17 @@ export class AuthserviceService {
     return this._api.API_Basic_PostTypeRequest('register', requestBody);
   }
 
-  logout() {
+  Call_API_Logout() {
     this._token.clearStorage();
     this.userSubject.next(null);
+  }
+
+  name='';
+  setName(name: string) {
+    this.name = name;
+  }
+
+  getName(): string {
+    return this.name;
   }
 }

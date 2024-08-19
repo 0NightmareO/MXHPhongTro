@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit{
   password_login_form_control = new FormControl('', [Validators.required, Validators.minLength(6)]);
 
   ngOnInit(): void {
-    this._auth.logout();
+    this._auth.Call_API_Logout();
     console.log("Token Login: ",this._token.getToken());
   }
   user = {

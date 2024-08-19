@@ -13,8 +13,20 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="homepage" routerLinkActive="active-link" (click)="clickHome()">Trang chủ</a>
                     </li>
-                    <li class="nav-item page" *ngIf="click_page==true">
-                        <p class="nav-link border-nav" style="font-weight: bold; color: #000">{{name_page}}</p>
+                    <li class="nav-item page" *ngIf="click_page==true && name_page==='Danh sách bài đăng'">
+                        <a class="nav-link" routerLink="/uiadmin/post-manage" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                            Danh sách bài đăng
+                        </a>
+                    </li>
+                    <li class="nav-item page" *ngIf="click_page==true && name_page==='Danh sách duyệt chủ trọ'">
+                        <a class="nav-link" routerLink="/uiadmin/approve-application" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                            Danh sách duyệt chủ trọ
+                        </a>
+                    </li>
+                    <li class="nav-item page" *ngIf="click_page==true && name_page==='Danh sách người dùng'">
+                        <a class="nav-link" routerLink="/uiadmin/user-list" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                            Danh sách người dùng
+                        </a>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -71,3 +83,5 @@
     </ul>
     </div>
 </menu>
+
+<router-outlet></router-outlet>

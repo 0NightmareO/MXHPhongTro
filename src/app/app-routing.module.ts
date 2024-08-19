@@ -22,8 +22,7 @@ import { UiUserComponent } from './components/ui-user/ui-user.component';
 
 const routes: Routes = [
   { path: '', component: RegisterComponent},
-  { path: 'uiuser', component: UiUserComponent, canActivate:[AuthGuardService],
-    children:[
+  { path: 'uiuser', component: UiUserComponent, canActivate:[AuthGuardService], children:[
     { path: 'rent-room', component: RentRoomComponent},
     { path: 'roommate-search', component: RoommateSearchComponent},
     { path: 'detailrentroom/:id', component: RoomDetailComponent },
@@ -38,8 +37,7 @@ const routes: Routes = [
       { path: 'register-owner', component: RegisterOwnerContentComponent },
     ]}  
   ]},
-  { path: 'uiadmin', component: UiAdminComponent, canActivate:[AuthGuardService]
-    , children:[
+  { path: 'uiadmin', component: UiAdminComponent, canActivate:[AuthGuardService], children:[
     { path: 'user-list', component: UserListComponent },
     { path: 'post-manage', component: PostManagementComponent},
     { path: 'approve-application', component: ApproveLandlordApplicationComponent},

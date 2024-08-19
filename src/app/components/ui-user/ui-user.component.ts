@@ -23,6 +23,7 @@ export class UiUserComponent {
       namefull = params['name'];
     });
     this.name = namefull;
+    this._auth.setName(this.name);
     console.log("Token ne:",this._token.getToken());
     if(this._token.getToken()){
       this.is_login=true;
@@ -35,7 +36,7 @@ export class UiUserComponent {
   }
 
   logOut(): void {
-    this._auth.logout();
+    this._auth.Call_API_Logout();
     this._router.navigate(['/']); 
   }
 }

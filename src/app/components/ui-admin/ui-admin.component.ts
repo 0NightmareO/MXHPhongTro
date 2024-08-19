@@ -24,6 +24,7 @@ export class UiAdminComponent implements OnInit{
     const target = event.target as HTMLElement;
     this.name_page = target.textContent?.trim() || '';
     this.click_page=true;
+    this.is_click_home=false;
   }
 
   clickHome(){
