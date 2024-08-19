@@ -1,0 +1,54 @@
+
+ <menu class="navbar navbar-expand-lg navbar-light bg-light menu" [class.expanded]="is_menu_expanded">
+    <button class="navbar-toggler button-nav" type="button" (click)="toggleMenu()" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMenu">
+    <ul class="navbar-nav mr-auto navbar-menu">
+        <div class="user navbar-brand">
+            <img src="public/Avatar.png" class="avta" alt="Avatar"/>
+            <span class="ms-2">{{name}}</span>
+        </div>
+        <div class="list">
+            <li class="a2 nav-item">
+                <p>
+                <img src="public/list_register.png" alt="List Register"> Quản lý tin đăng
+                </p>
+            </li>
+            <li class="a1 nav-item">
+                <a class="nav-link navlink1" routerLink="post-for-roommate" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                    Đăng tin mới
+                </a>
+            </li>
+            <li class="a1 nav-item">
+                <a class="nav-link navlink1" routerLink="news-list" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                    Danh sách bài đăng
+                </a>
+            </li>
+            <li class="a2 nav-item">
+                <p>
+                    <img src="public/user.png" alt="User"> Quản lý tài khoản
+                </p>
+            </li>
+            <li class="a1 nav-item">
+                <a class="nav-link navlink1" routerLink="edit-profile" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                    Chỉnh sửa hồ sơ
+                </a>
+            </li>
+            <li class="a1 nav-item active">
+                <a class="nav-link navlink1" routerLink="change-password" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                    Thay đổi mật khẩu
+                </a>
+            </li>
+            <li class="a1 nav-item active">
+                <a class="nav-link navlink1" routerLink="register-owner" routerLinkActive="active-link" (click)="getLinkContent($event)">
+                    ĐK làm người cho thuê
+                </a>
+            </li>
+        </div>
+    </ul>
+    </div>
+</menu>
+
+
+<router-outlet></router-outlet>
