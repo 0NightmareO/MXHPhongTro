@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSlider,  } from '@angular/material/slider';
 import { MatSliderModule } from '@angular/material/slider';
-
+import { MaterialModule } from './app/material/material/material.module';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { NavbarComponent } from './app/components/navbar/navbar.component';
@@ -41,11 +41,9 @@ import { UiAdminComponent } from './app/components/ui-admin/ui-admin.component';
 import { UiUserComponent } from './app/components/ui-user/ui-user.component';
 import { UserListComponent } from './app/components/user-list/user-list.component';
 import { ListFavoritePostComponent } from './app/components/list-favorite-post/list-favorite-post.component';
-
-
-
-
-
+import { RoommateSearchComponent } from './app/components/roommate-search/roommate-search.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -77,7 +75,7 @@ import { ListFavoritePostComponent } from './app/components/list-favorite-post/l
     UiUserComponent,
     UserListComponent,
     ListFavoritePostComponent,
-    
+    RoommateSearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,8 +88,9 @@ import { ListFavoritePostComponent } from './app/components/list-favorite-post/l
     HttpClientModule,
     ReactiveFormsModule,
     CommonModule,
-    MatSliderModule
-   
+    MatSliderModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
     provideAnimationsAsync()

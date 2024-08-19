@@ -1,1 +1,380 @@
-<p>rent-room works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header-contain">
+            <div class="process_value search mt-4">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnradio1">Cho thuê</label>
+                    
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">Tìm người ở ghép</label>
+                </div>
+                <div class="button">
+                    <div class="reset">
+                        <button class="reset-children" (click)="resetAll()">
+                            <img src="public/recycle.png"/>
+                            <p>Đặt lại</p>
+                        </button>
+                        <button class="reset-children" (click)="searchAll()">
+                            <img src="public/search_white.png"/>
+                            <p>Tìm kiếm</p>
+                        </button>
+                    </div>
+                </div>  
+            </div>
+            <div class="type">
+                <div class="item item-value">
+                    <div class="name">
+                        <a *ngIf="type_home==''" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle3': active_item == 'type_home'}" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('type_home')">
+                            Loại nhà đất
+                        </a>
+                        <a *ngIf="type_home!=''" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle3': active_item == 'type_home'}" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('type_home')">
+                            {{type_home}}
+                        </a>
+                    </div>
+                    <div *ngIf="is_click_btn_typehome && active_item === 'type_home'" class="display-value">
+                        <div class="all">
+                            <button *ngFor="let type of array_type_home" 
+                            (click)="setTypeHome(type.value)"
+                            [ngClass]="{'selected': type_home === type.value}">
+                                {{type.value}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-address">
+                    <div class="name">
+                        <a *ngIf="city_name==''" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle2': active_item == 'address'}" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('address')">
+                            Khu vực
+                        </a>
+                        <a  *ngIf="city_name!=''" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle2': active_item == 'address'}" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('address')">
+                            {{ region}}
+                        </a>
+                    </div>
+                    <div *ngIf="is_click_btn_address && active_item === 'address'" class="display-address">
+                        <div class="province">
+                            <img src="public/right-arrow.png"/>
+                            <select [(ngModel)]="selected_city" (change)="onCityChange($event)">
+                                <option value="" selected>Chọn tỉnh thành</option>
+                                <option *ngFor="let city of cities" [value]="city.Id">{{ city.Name }}</option>
+                            </select>
+                        </div>
+                        <div class="district">
+                            <img src="public/right-arrow.png"/>
+                            <select [(ngModel)]="selected_district" (change)="onDistrictChange($event)">
+                                <option value="" selected>Chọn quận huyện</option>
+                                <option *ngFor="let district of districts" [value]="district.Id">{{ district.Name }}</option>
+                              </select>
+                        </div>
+                        <!-- <div class="commune">
+                            <img src="public/right-arrow.png"/>
+                            <select [(ngModel)]="selectedWard">
+                                <option value="" selected>Chọn phường xã</option>
+                                <option *ngFor="let ward of wards" [value]="ward.Id">{{ ward.Name }}</option>
+                              </select>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="item item-value">
+                    <div class="name">
+                        <a *ngIf="start_acreage==0 && end_acreage==array_acreage[array_acreage.length-1].max" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle3': active_item == 'acreage'}" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('acreage')">
+                            Diện tích
+                        </a>
+                        <a *ngIf="(start_acreage!=0 && end_acreage!=array_acreage[array_acreage.length-1].max) || 
+                                (start_acreage==0 && end_acreage!=array_acreage[array_acreage.length-1].max) || 
+                                (start_acreage!=0 && end_acreage==array_acreage[array_acreage.length-1].max)" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle3': active_item == 'acreage'}" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('acreage')">
+                            Từ {{start_acreage}}m<sup>2</sup> - {{end_acreage}}m<sup>2</sup>
+                        </a>
+                    </div>
+                    <div *ngIf="is_click_btn_acreage && active_item === 'acreage'" class="display-value">
+                        <div class="value">
+                            <div class="start">
+                                <p>{{start_acreage}}</p>
+                            </div>
+                            <div class="img">
+                                <img src="public/arrow-right.png"/>
+                            </div>
+                            <div class="end">
+                                <p>{{end_acreage}}</p>
+                            </div>
+                        </div>
+                        <mat-slider smin="0" max="150" step="5">
+                            <input matSliderStartThumb [(ngModel)]="start_acreage">
+                            <input matSliderEndThumb [(ngModel)]="end_acreage">
+                            </mat-slider>
+                        <div class="all">
+                            <button *ngFor="let acreage of array_acreage" 
+                            (click)="setAcreageRange(acreage.min,acreage.max)"
+                            [ngClass]="{'selected': start_acreage === acreage.min && end_acreage === acreage.max}">
+                                {{acreage.label}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-value">
+                    <div class="name">
+                        <a *ngIf="start_price==0 && end_price==array_price[array_price.length-1].max" class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle4': active_item == 'price'}" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('price')">
+                           Mức giá
+                        </a>
+                        <a *ngIf="(start_price!=0 && end_price!=array_price[array_price.length-1].max) || 
+                                (start_price==0 && end_price!=array_price[array_price.length-1].max) || 
+                                (start_price!=0 && end_price==array_price[array_price.length-1].max)"
+                            class="btn dropdown-toggle custom-dropdown-toggle" [ngClass]="{'custom-dropdown-toggle4': active_item == 'price'}" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleArrow('price')">
+                            Từ {{start_price}} - {{end_price}}
+
+                        </a>
+                    </div>
+                    <div *ngIf="is_click_btn_price && active_item === 'price'" class="display-value">
+                        <div class="value">
+                            <div class="start">
+                                <p>{{start_price}}</p>
+                            </div>
+                            <div class="img">
+                                <img src="public/arrow-right.png"/>
+                            </div>
+                            <div class="end">
+                                <p>{{end_price}}</p>
+                            </div>
+                        </div>
+                        <mat-slider smin="0" max="50000000" step="200000">
+                            <input matSliderStartThumb [(ngModel)]="start_price">
+                            <input matSliderEndThumb [(ngModel)]="end_price">
+                            </mat-slider>
+                        <div class="all">
+                            <button *ngFor="let price of array_price" 
+                            (click)="setPriceRange(price.min,price.max)"
+                            [ngClass]="{'selected': start_price === price.min && end_price === price.max}">
+                                {{price.label}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-content">
+        <div class="filter">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="public/list.png"/>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="standard">
+                <div class="price">
+                    <p>Xem theo giá</p>
+                    <button *ngFor="let price of array_price" 
+                            (click)="searchPrice(price.min,price.max)">
+                        <p>{{price.label}}</p>
+                    </button>
+                </div>
+                <div class="acreage">
+                    <p>Xem theo diện tích</p>
+                    <button *ngFor="let acreage of array_acreage" 
+                            (click)="searchAcreage(acreage.min,acreage.max)">
+                        <p>{{acreage.label}}</p>
+                    </button>
+                </div>
+                <div class="category">
+                    <p>Danh mục cho thuê</p>
+                    <button>
+                        <p>Phòng trọ. Nhà trọ</p>
+                    </button>
+                    <button>
+                        <p>Nhà nguyên căn</p>
+                    </button>
+                    <button>
+                        <p>Căn hộ mini</p>
+                    </button>
+                </div>
+                <div class="posts">
+                    <p>Bài viết được quan tâm</p>
+                    <div class="item">
+                        <button>
+                            <img src="public/right-arrow-grey.png"/>
+                            <p>Thủ tục thuê phòng trọ chính xác dành cho người nước ngoài</p>
+                        </button>
+                    </div>
+                    <div class="item">
+                        <button>
+                            <img src="public/right-arrow-grey.png"/>
+                            <p>Sinh viên Hà Nội nên ở trọ hay ký túc xá? Cần lưu ý điều gì khi thuê trọ?</p>
+                        </button>
+                    </div>
+                    <div class="item">
+                        <button>
+                            <img src="public/right-arrow-grey.png"/>
+                            <p>Cập Nhật Giá Thuê Phòng Trọ Đống Đa Tháng 6/2024</p>
+                        </button>
+                    </div>
+                    <div class="item">
+                        <button>
+                            <img src="public/right-arrow-grey.png"/>
+                            <p>Lộ diện top 5 khu vực "hot" nhất để thuê phòng trọ tại TPHCM</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="inf">
+            <div class="filter">
+                <p>Cho thuê/</p>
+                <p>Tất cả</p>
+            </div>
+            <h1>Cho thuê nhà đất trên toàn quốc</h1>
+            <div class="quatity">
+                <p>Hiện có 17.435 tin</p>
+                <select>
+                    <option>Tất cả</option>
+                    <option>Bài đăng xác thực</option>
+                    <option type="button">Tin mới nhất</option>
+                </select>
+            </div>
+            <div class="body">
+                <div class="content-wrapper">
+                    <div class="detail">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-12 mb-4" *ngFor="let inf of infs">
+                                <div class="item" (click)="navigateToDetail(inf.id)">
+                                    <div class="img">
+                                        <!-- <div class="img-child">
+                                            <img src="public/pic_rent1.png"/>
+                                        </div>
+                                        <div class="img-child">
+                                            <img src="public/pic_rent2.png"/>
+                                            <img src="public/pic_rent3.png"/>
+                                        </div> -->
+                                        <div class="img-child" *ngIf="inf.images.length > 0">
+                                            <img [src]="inf.images[0]"/>
+                                        </div>
+                                        <div class="img-child" *ngIf="inf.images.length > 1">
+                                        <img *ngFor="let img of inf.images.slice(1)" [src]="img"/>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="intro">
+                                            <h3>
+                                                {{inf.description}}
+                                            </h3>
+                                            <div class="intro-inf d-flex flex-wrap">
+                                                <p class="fee">{{inf.price}} / tháng</p>
+                                                <p class="acreage">{{inf.acreage}}m<sup>2</sup>  </p>
+                                                <p class="address">{{ getFullAddress(inf.address) }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="contact d-flex flex-wrap">
+                                            <div class="contact-profile">
+                                                <div class="avt">
+                                                    <img src="public/Avatar.png"/>
+                                                </div>
+                                                <div class="col-6 col-sm-6 d-flex flex-wrap name">
+                                                    <p class="full-name">{{inf.user.name}}</p>
+                                                    <p class="time">{{ formatDate(inf.createDate.toString())}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="contact-profile d-flex flex-wrap">
+                                                <button class="phone" (click)="callPhoneNumber('0948394832')">
+                                                    <img src="public/telephone.png"/>
+                                                    <p>0948394832</p>
+                                                </button>
+                                                <button class="zalo" (click)="openZaloMessage('0948394832')">
+                                                    <img src="public/zalo-logo.png"/>
+                                                    <p>Liên hệ Zalo</p>
+                                                </button>
+                                                <div class="icon">
+                                                    <button class="share">
+                                                        <img src="public/share.png"/>
+                                                    </button>
+                                                    <button class="like">
+                                                        <i class="bi bi-suit-heart"></i>
+                                                        <!-- <i class="bi bi-suit-heart-fill" *ngIf="inf.islike==true" style="color: #55B3D9"></i> -->
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="standard">
+                        <div class="price">
+                            <p>Xem theo giá</p>
+                            <button *ngFor="let price of array_price" 
+                                    (click)="searchPrice(price.min,price.max)">
+                                <p>{{price.label}}</p>
+                            </button>
+                        </div>
+                        <div class="acreage">
+                            <p>Xem theo diện tích</p>
+                            <button *ngFor="let acreage of array_acreage" 
+                                    (click)="searchAcreage(acreage.min,acreage.max)">
+                                <p>{{acreage.label}}</p>
+                            </button>
+                        </div>
+                        <div class="category">
+                            <p>Danh mục cho thuê</p>
+                            <button>
+                                <p>Phòng trọ. Nhà trọ</p>
+                            </button>
+                            <button>
+                                <p>Nhà nguyên căn</p>
+                            </button>
+                            <button>
+                                <p>Căn hộ mini</p>
+                            </button>
+                        </div>
+                        <div class="posts">
+                            <p>Bài viết được quan tâm</p>
+                            <div class="item">
+                                <button>
+                                    <img src="public/right-arrow-grey.png"/>
+                                    <p>Thủ tục thuê phòng trọ chính xác dành cho người nước ngoài</p>
+                                </button>
+                            </div>
+                            <div class="item">
+                                <button>
+                                    <img src="public/right-arrow-grey.png"/>
+                                    <p>Sinh viên Hà Nội nên ở trọ hay ký túc xá? Cần lưu ý điều gì khi thuê trọ?</p>
+                                </button>
+                            </div>
+                            <div class="item">
+                                <button>
+                                    <img src="public/right-arrow-grey.png"/>
+                                    <p>Cập Nhật Giá Thuê Phòng Trọ Đống Đa Tháng 6/2024</p>
+                                </button>
+                            </div>
+                            <div class="item">
+                                <button>
+                                    <img src="public/right-arrow-grey.png"/>
+                                    <p>Lộ diện top 5 khu vực "hot" nhất để thuê phòng trọ tại TPHCM</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="/thuephong/#">
+            <img src="public/up-arrow.png"/>
+        </a>  
+    </footer>
+
+</body>
+</html>

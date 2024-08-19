@@ -1,22 +1,19 @@
 
 *{
     font-size: 16px;
-    
     color: black;
     font-weight: 500;
-    /* outline: none !important; 
-    box-shadow: none !important; */
-    
 }
+
 body {
     margin: 0;
     line-height: normal;
-  
 }
 span {
   font-size: 16px;
   font-weight: 400;
 }
+
 .form-label::after {
     content: ' *';
     color: red;
@@ -26,12 +23,13 @@ span {
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
     background-color: #fff;
-    
     width: 75%;
     display: flex;
     padding: 20px;
     margin: 60px auto 20px;
+    margin-top: 100px;
     height: auto;
+    margin-left: 300px;
 }
 sup{
     font-size: 12px;
