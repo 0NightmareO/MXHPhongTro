@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NewListContentService } from '../../services/new-list-content/new-list-content.service';
+import { AccountUserService } from '../../services/account-user/account-user.service';
+import { Post } from '../../models/post/post';
 
 @Component({
   selector: 'app-news-list-content',
@@ -9,16 +11,28 @@ import { NewListContentService } from '../../services/new-list-content/new-list-
 })
 export class NewsListContentComponent implements OnInit {
   data: any; // Biến để lưu trữ dữ liệu nhận từ API
+  infs: Post[] = [];
+  content: any;
 
   constructor(
     private dataService: NewListContentService,
-    private router: Router
+    private router: Router,
+    private _user: AccountUserService
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getData().subscribe(response => {
-      this.data = response;
-      console.log('Dữ liệu từ API:', this.data); // Kiểm tra dữ liệu trong console
+    // this.dataService.getData().subscribe(response => {
+    //   this.data = response;
+    //   console.log('Dữ liệu từ API:', this.data); 
+    // });
+    this._user.Call_API_GetPost().subscribe({
+      next: (response: { contents: Post[] }) => {
+        console.log("Content: ", response.contents);
+        this.content = response.contents;
+      },
+      error: (error) => {
+        console.error("Error fetching posts:", error);
+      }
     });
   }
 

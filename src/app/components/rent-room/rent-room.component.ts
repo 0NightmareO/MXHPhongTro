@@ -46,7 +46,7 @@ export class RentRoomComponent {
     { min: 30, max: 50, label: 'Từ 30m2 - 50m2' },
     { min: 50, max: 70, label: 'Từ 50m2 - 70m2' },
     { min: 70, max: 100, label: 'Từ 70m2 - 100m2' },
-    { min: 100, max: 1000, label: 'Từ 100m2 trở lên' }
+    { min: 100, max: 10000, label: 'Từ 100m2 trở lên' }
   ];
 
   array_type_home = [
@@ -242,7 +242,7 @@ export class RentRoomComponent {
   showPost(){
     const query1 = this.listPosts('trọ',this.infs_room);
     const query2 = this.listPosts('mini',this.infs_mini);
-    const query3 = this.listPosts('nhà',this.infs_house);
+    const query3 = this.listPosts('nguyên',this.infs_house);
     setTimeout(() => {
       this.infs = this.infs_house.concat(this.infs_mini).concat(this.infs_room);
       console.log("Inf: ", this.infs);
@@ -263,7 +263,7 @@ export class RentRoomComponent {
     if(this.type_home=="Phòng trọ, Nhà trọ")
         params = 'trọ';
     else if(this.type_home=="Nhà thuê nguyên căn")
-      params = 'nhà';
+      params = 'nguyên';
     else if(this.type_home=="Căn hộ mini")
       params = 'mini';
     else if(this.type_home=="Tất cả nhà đất")
@@ -282,6 +282,12 @@ export class RentRoomComponent {
     this.resetFilter();
     this.start_acreage=start;
     this.end_acreage=end;
+    this.searchAll();
+  }
+
+  searchTypeHome(type: string){
+    this.resetFilter();
+    this.type_home=type;
     this.searchAll();
   }
 

@@ -11,11 +11,12 @@
         <div class="header-contain">
             <div class="process_value search mt-4">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-primary" for="btnradio1">Cho thuê</label>
-                    
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Tìm người ở ghép</label>
+                    <a class="nav-link button-page-current" routerLink="/uiuser/roommate-search" routerLinkActive="active-link">
+                        Tìm người ở ghép
+                      </a>
+                      <a class="nav-link button-page" routerLink="/uiuser/rent-room" routerLinkActive="active-link">
+                        Cho thuê
+                      </a>
                 </div>
                 <div class="button">
                     <div class="reset">
@@ -74,13 +75,6 @@
                                 <option *ngFor="let district of districts" [value]="district.Id">{{ district.Name }}</option>
                               </select>
                         </div>
-                        <!-- <div class="commune">
-                            <img src="public/right-arrow.png"/>
-                            <select [(ngModel)]="selectedWard">
-                                <option value="" selected>Chọn phường xã</option>
-                                <option *ngFor="let ward of wards" [value]="ward.Id">{{ ward.Name }}</option>
-                              </select>
-                        </div> -->
                     </div>
                 </div>
                 <div class="item item-value">
@@ -188,14 +182,9 @@
                 </div>
                 <div class="category">
                     <p>Danh mục cho thuê</p>
-                    <button>
-                        <p>Phòng trọ. Nhà trọ</p>
-                    </button>
-                    <button>
-                        <p>Nhà nguyên căn</p>
-                    </button>
-                    <button>
-                        <p>Căn hộ mini</p>
+                    <button *ngFor="let type of array_type_home" 
+                        (click)="searchTypeHome(type.value)">
+                        <p>{{type.value}}</p>
                     </button>
                 </div>
                 <div class="posts">
@@ -250,13 +239,6 @@
                             <div class="col-12 col-md-6 col-lg-12 mb-4" *ngFor="let inf of infs">
                                 <div class="item" (click)="navigateToDetail(inf.id)">
                                     <div class="img">
-                                        <!-- <div class="img-child">
-                                            <img src="public/pic_rent1.png"/>
-                                        </div>
-                                        <div class="img-child">
-                                            <img src="public/pic_rent2.png"/>
-                                            <img src="public/pic_rent3.png"/>
-                                        </div> -->
                                         <div class="img-child" *ngIf="inf.images.length > 0">
                                             <img [src]="inf.images[0]"/>
                                         </div>
@@ -300,7 +282,6 @@
                                                     </button>
                                                     <button class="like">
                                                         <i class="bi bi-suit-heart"></i>
-                                                        <!-- <i class="bi bi-suit-heart-fill" *ngIf="inf.islike==true" style="color: #55B3D9"></i> -->
                                                     </button>
                                                 </div>
                                             </div>
@@ -327,14 +308,9 @@
                         </div>
                         <div class="category">
                             <p>Danh mục cho thuê</p>
-                            <button>
-                                <p>Phòng trọ. Nhà trọ</p>
-                            </button>
-                            <button>
-                                <p>Nhà nguyên căn</p>
-                            </button>
-                            <button>
-                                <p>Căn hộ mini</p>
+                            <button *ngFor="let type of array_type_home" 
+                                (click)="searchTypeHome(type.value)">
+                                <p>{{type.value}}</p>
                             </button>
                         </div>
                         <div class="posts">
